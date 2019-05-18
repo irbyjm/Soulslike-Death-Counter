@@ -358,7 +358,7 @@ namespace Death_Counter
             var mainThreadText = new Func<string>(GetOutputTextFormat);
             var textFormat = (string)Application.Current.Dispatcher.Invoke(mainThreadText);
 
-            Application.Current.Dispatcher.Invoke(new Action(() => StatusUpdate("Found " + currentGame.CleanName + ".", currentDeaths, true)));
+            Application.Current.Dispatcher.Invoke(new Action(() => StatusUpdate("Found " + currentGame.CleanName + "...", currentDeaths, true)));
 
             var outputString = string.Empty;
 
@@ -398,7 +398,17 @@ namespace Death_Counter
         {
             gameIsRunning = processStatus;
             lblStatus.Content = statusMessage;
-            lblDeathCounter.Content = deaths;
+            if (processStatus == true)
+            {
+                btnStart.Content = "Restart";
+                button_rg.Source = new BitmapImage(new Uri("Resources/button_green.jpg", UriKind.Relative));
+                lblDeathCounter.Content = deaths;
+            }
+            else
+            {
+                button_rg.Source = new BitmapImage(new Uri("Resources/button_red.jpg", UriKind.Relative));
+                lblDeathCounter.Content = "-";
+            }
         }
 
         private string GetOutputTextFormat()
